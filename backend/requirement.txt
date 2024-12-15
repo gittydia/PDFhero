@@ -2,3 +2,9 @@ flask
 PyPDF2
 generativeai
 flask_cors
+requests
+jsonify
+numpy
+sentence-transformers
+google-generativeai
+python-dotenv
