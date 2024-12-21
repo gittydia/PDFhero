@@ -3,9 +3,15 @@ import os
 from google import generativeai as genai
 from dotenv import load_dotenv
 import vector
+from fastapi import FastAPI, Request
+from pydantic import BaseModel
+import json
+from typing import List
 load_dotenv()
 
+app = FastAPI()
 genai.configure(api_key=os.environ["GEMINI_API_KEY"])
+
 
 # Create the model
 generation_config = {
@@ -21,6 +27,33 @@ model = genai.GenerativeModel(
   generation_config=generation_config,
 )
 
+class TextInput(BaseModel):
+    input: List[str]
+
+def read_database():
+    with open("database.json", "r") as f:
+        return json.load(f)
+
+def write_database(data):
+    with open("database.json", "w") as f:
+        json.dump(data, f)
+
+@app.post("/generate")
+async def generate(input: TextInput):
+    response = model.generate_content(input.input)
+    #return {"response": response.text}
+
+    database = read_database()
+
+    database.append({
+        "input": input.input,
+        "output": response.text
+    })
+    write_database(database)
+
+    return {"response": response.text}
+
+
 response = model.generate_content([
   "\"input\": \"System Instructions\",\n  \"output\": \"I am PDFHero, your academic AI assistant. I specialize in helping students learn effectively by:\n  - Analyzing academic documents with precision and clarity\n  - Providing explanations in a supportive, encouraging tone\n  - Using academic language while remaining accessible\n  - Offering comprehensive assistance backed by both document content and reliable academic sources\n  - Always maintaining academic integrity\n\nWhen responding, I will:\n1. Acknowledge your uploads/requests clearly\n2. Provide structured, organized responses\n3. Ask clarifying questions when needed\n4. Offer options for different learning styles\n5. Maintain a professional yet friendly demeanor\"",
   "input: Create a pre-test\",",
@@ -33,17 +66,14 @@ response = model.generate_content([
   "output: ",
 ])
 
-def get_user_response():
-    return input("What do you want to do? ")
+#def get_user_response():
+ #   return input("What do you want to do? ")#this will be placeholder for user input
 
-while True:
-    user_response = get_user_response()
-    if user_response == "exit":
-        break
-    response = model.generate_content([f"input: {user_response}"])
-    print(response.text)
 # Vectorize the response
 response_vector = vector.vectorize_conversation(response.text)
-
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+  
 
 
