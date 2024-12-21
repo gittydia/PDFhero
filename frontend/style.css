@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    line-height: 1.6;
+    padding: 20px;
+    background-color: black;
+}
+header {
+    text-align: left;
+    margin-bottom: 2rem;
+    color: white;
+}
+a {
+    color: white;
+    text-decoration: none;
+}
+
+p {
+    color: white;
+}
+.file-section{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+}
+.line-seperator{
+    border-bottom: 1px solid white;
+    margin: 10px 0;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
