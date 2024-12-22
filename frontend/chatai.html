@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero</title>
+    <link = rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+    <div class="upload-container">
+        <section class="upload-section">
+            <label for="pdfInput" class="upload-label">
+                <i class="fas fa-file-upload"></i> Browse
+            </label>
+            <input type="file" id="pdfInput" accept=".pdf" style="display: none;">
+            <button id="uploadBtn"><i class="fas fa-upload"></i> Upload PDF</button>
+        </section>
+    </div>
+    <section class="chat-section">
+        <div class="chat-container">
+            <div class="chat-box">
+                <div class="chat-message">
+                    <p>Hello! How can I help you today?</p>
+                </div>
+            </div>
+            <div class="chat-input
+            ">
+                <input type="text" id="userInput" placeholder="Type your message...">
+                <button id="sendBtn">Send</button>
+            </div>
+        </div>
+    </section>
+    </main>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
