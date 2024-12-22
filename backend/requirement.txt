@@ -1,9 +1,9 @@
-flask
 PyPDF2
 generativeai
-flask_cors
 requests
 jsonify
+fastapi
+uvicorn
 numpy
 sentence-transformers
 google-generativeai
