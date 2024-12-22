@@ -1,58 +1,213 @@
-* {
+body {
+    font-family: monospace;
+    line-height: 1.6;
+    color: #ffffff;
+    background-color: black;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    padding: 0; 
+    overflow: hidden;
 }
 
-body {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    line-height: 1.6;
-    padding: 20px;
-    background-color: black;
-}
 header {
-    text-align: left;
-    margin-bottom: 2rem;
+    background-color: black;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+main {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.Hero {
+    position: relative;
+    bottom: 30px;
+    left: 10px;
+    text-align: center;
+    font-family: monospace;
+    font-size: 32px;
+    margin-bottom: 40px;
+    border-bottom: 2px solid white;
+}
+.logo-card{
+    background-color: #000000;
+    padding: 40px;
+    width: 300px;
+    height: 15px;
+    margin: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;    
+   
+}
+.logo-card img{
+    position: relative;
+    bottom: 60px;
+    left: -8px;
+    width: 100px;
+
+
+}
+.logo-card:hover{
+    background-color: #a89c8a;
+}
+
+
+h1, h2 {
     color: white;
+    font-size: 40px;
+}
+
+h3 {
+    line-height:1.5 ;
+    font-size: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ff9900;
+
 }
 a {
     color: white;
-    text-decoration: none;
-}
+      text-decoration: none;
 
-p {
+}
+a:visited{
     color: white;
 }
-.file-section{
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    gap: 1rem;
-    margin-bottom: 2rem;
-
+p {
+    font-size: 20px;
+    line-height: 1.5;
 }
+.text-left{
+    position: absolute;
+    left: 90px;
+    width: 200px;
+    height: auto;
+}
+
 .line-seperator{
     border-bottom: 1px solid white;
-    margin: 10px 0;
+    margin: -20px 0
+
+
+}
+.upload-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
 }
 
 .upload-section {
     display: flex;
-    flex-direction: column;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    align-items: center;
+    gap: 10px;
 }
 
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
+.upload-label {
+    cursor: pointer;
     color: white;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#uploadBtn {
+    color: white;
+    background-color: #333;
+    padding: 10px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #0056b3;
+#uploadBtn i, .upload-label i {
+    margin-right: 5px;
+}
+
+.cta-button {
+    background-color: transparent;
+    color: #000000;
+    border: none;
+    padding: 0px;
+    font-size: 20px;
+    font-family: monospace;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.cta-button::after{
+    content: '';
+    display: block;
+    height: 2px;
+    width: 100%;
+    background-color: #070707;
+    margin-top: 5px;
+}
+
+.cta-button:hover {
+    background-color: orange;
+}
+.info-right {
+    position: fixed;
+    bottom: 450px;
+    left: 700px;
+    width: 700px;
+    height: 450px;
+    color: white;
+    font-family:monospace;;
+    overflow: auto;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 100;    
+}
+.info-right-section {
+    display: flex;
+    background-color:transparent;
+    padding: 50px;
+    border-radius: 5px 0 0 5px;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+}
+
+.info {
+    width: 550px;
+    display: block;
+}
+/* Hide scrollbar for WebKit browsers */
+.info-right::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+.info-right {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+
+@media (min-width: 768px) {
+    .event-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+}
+
+
+footer {
+    background-color: #111;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: sticky;
+    height: 20px;
+    bottom: -0;
+    width: 100%;
+    flex: 1;
 }
