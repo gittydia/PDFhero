@@ -7,7 +7,11 @@ from sentence_transformers import SentenceTransformer
 from api import HeroBot
 import logging
 from fastapi.responses import FileResponse
-
+"""
+the endpoint is good, its just need a frontend to interact with it
+/chat is the endpoint to interact with the chatbot. this can be intearcted only if
+theres endpoint to interact with the chatbot.
+"""
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
