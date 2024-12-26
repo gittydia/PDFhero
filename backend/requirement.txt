@@ -8,3 +8,7 @@ numpy
 sentence-transformers
 google-generativeai
 python-dotenv
+python multi-part
+logging
+pydantic
+typing
