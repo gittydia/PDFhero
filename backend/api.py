@@ -5,7 +5,12 @@ from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from fastapi import FastAPI
 from typing import Dict, Any
-
+#things to do
+'''
+1. implement error handling
+2. implement test ai bot
+3. implement ai bot logic
+'''
 load_dotenv()  # Load environment variables from .env file
 
 # Configure generative AI
@@ -56,3 +61,5 @@ def HeroBot(message: str):
         return response.text.replace('\\n', '\n')
     except Exception as e:
         return f"Error: {str(e)}\n"
+
+
