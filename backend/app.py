@@ -5,8 +5,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
 from api import HeroBot
+from test import HeroTest
 import logging
+from vector import vectorize_conversation
 from PDFfilereader import PDFReader, split_text_into_chunks
+from sklearn.metrics.pairwise import cosine_similarity
 
 # Configure logging
 logging.basicConfig(
@@ -24,6 +27,8 @@ class PDFStorage:
         self.chunks = []
         
 pdf_storage = PDFStorage()
+pdf_contents = {}
+transformer_model = SentenceTransformer('all-MiniLM-L6-v2')
 
 app.add_middleware(
     CORSMiddleware,
@@ -92,13 +97,76 @@ async def chat_with_context(request: ChatRequest):
                 logger.error(f"Error in chat-with-context endpoint: {str(e)}", exc_info=True)
                 raise HTTPException(status_code=500, detail=str(e))
 
-
 @app.get("/status")
 async def get_status():
     return {
         "has_pdf": bool(pdf_storage.current_text),
         "chunks_count": len(pdf_storage.chunks) if pdf_storage.chunks else 0
     }
+
+from pydantic import BaseModel
+
+class TestRequest(BaseModel):
+    content: str
+
+@app.post("/test")
+async def generate_test(request: TestRequest):
+    try:
+        content = request.content 
+        test_questions = await HeroTest.generate(content) # Assuming HeroTest.generate expects the content directly
+
+        # Split the response into individual questions
+        questions = [q.strip() for q in test_questions.split('\n\n') if q.strip()]
+        
+        return {"questions": questions} 
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+class ContentResponse(BaseModel):
+    content: str
+
+@app.get("/content")
+async def get_content():
+    if not pdf_storage.current_text:
+        raise HTTPException(status_code=404, detail="No PDF content found. Please upload a PDF first.")
+    return ContentResponse(content=pdf_storage.current_text)
+
+class AnswerRequest(BaseModel):
+    test_id: str = None
+    user_answer: str
+    original_question: str
+
+def generate_feedback(score: float) -> str:
+    if score > 0.85:
+        return "Excellent answer!"
+    elif score > 0.7:
+        return "Good answer, but could be more precise."
+    else:
+        return "Your answer needs improvement."
+
+@app.post("/check-answer")
+async def check_answer(request: AnswerRequest):
+    try:
+        # Vectorize the user's answer
+        answer_vector = transformer_model.encode([request.user_answer])[0]
+        
+        # Compare with stored vectors using similarity
+        similarity_score = cosine_similarity(
+            [answer_vector], 
+            [request.original_vectors["output"]]
+        )[0][0]
+        
+        # Evaluate based on similarity threshold
+        is_correct = similarity_score > 0.85  # Adjust threshold as needed
+        
+        return {
+            "is_correct": is_correct,
+            "similarity_score": float(similarity_score),
+            "feedback": generate_feedback(similarity_score)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
