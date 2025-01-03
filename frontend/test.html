@@ -4,54 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test</title>
-    
-    <style>
-        .container {
-            display: flex;
-            gap: 20px;
-            padding: 20px;
-        }
-        .box {
-            flex: 1;
-            border: 1px solid #020202;
-            padding: 15px;
-            border-radius: 5px;
-            min-height: 550px;
-            background-color: black;
-        }
-        h2 {
-            margin-top: 0;
-            color: white;
-            font-size: 30px;
-        }
-        body {
-            background: linear-gradient(to right, #f0f0f0, black);
-            font-family: monospace;
-        }
-    </style>
+    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="scriptTest.js"></script>
 </head>
 <body>
     <div class="upload-container">
         <section class="upload-section">
-            <label for="pdfInput" class="upload-label">
-                <i class="fas fa-file-upload"></i> Browse
-            </label>
-            <input type="file" id="pdfInput" accept=".pdf" style="display: none;">
-            <button id="uploadBtn"><i class="fas fa-upload"></i> Upload PDF</button>
+            <div class="file-upload">
+                <input type="file" id="pdfInput" accept=".pdf">
+                <button id="uploadBtn">Upload PDF</button>
+
+                <span id= "uploadStatus"></span>
+            </div>
         </section>
     </div>
-   
+
     <div class="container">
         <div class="box">
             <h2>AI Generated Question</h2>
-            <div id="aiAnswer">
-                <!-- AI generated content will go here -->
-            
-            </div>
+            <div id="aiAnswer" style="background-color: white; color: black;"></div>
         </div>
+        
+        <div class="test-controls">
+            <button id="submitdBtn" class="action-button">Generate Test</button> 
+            <button id="checkAnswerBtn" class="action-button">Check Answer</button>
+        </div>
+
         <div class="box">
-            <h2>Your Answer</h2>
-            <textarea id="userAnswer" placeholder="Type your answer here..." style="width: 100%; height: 450px; font-family: monospace; font-size: 25px;"></textarea>
+            <h2>Your Answer</h2> 
+            <textarea id="userInput" placeholder="Type your answer here..."></textarea>
+            <div id="resultDisplay"></div>
         </div>
     </div>
 </body>
