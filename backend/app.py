@@ -10,6 +10,11 @@ import logging
 from vector import vectorize_conversation
 from PDFfilereader import PDFReader, split_text_into_chunks
 from sklearn.metrics.pairwise import cosine_similarity
+'''
+    TO-DO:
+    1. DEBUG: THE TEST GENERATION FUNCTION IS GIVING THE ANSWER
+    2. THE CHECK-ANSWER IS NOT WORKING 
+'''
 
 # Configure logging
 logging.basicConfig(
