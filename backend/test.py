@@ -1,5 +1,4 @@
-#ai feature that will bring the user the questions that they need to study for the test
-#according to the content that they have uploaded
+
 import os
 from dotenv import load_dotenv
 import google.generativeai as genai
@@ -37,17 +36,9 @@ class HeroTest:
         try:
             # Create a more specific prompt for multiple choice questions
             prompt = f"""
-            Based on the following content, generate 5 multiple choice questions.
-            For each question, provide 4 options (A, B, C, D) and indicate the correct answer.
-            Format each question like this:
-
-            Question 1: [Question text]
-            A) [Option A]
-            B) [Option B]
-            C) [Option C]
-            D) [Option D]
-            Correct Answer: [A/B/C/D]
-
+            Based on the following content, create five multiple choice questions with four options, create ten fill-in-the-blank questions, and ten
+            true or false questions. the multiple choice contains a, b, c, and d. Each question should have only one correct answer. 
+            Make sure to make the questions challenging and engaging and the questions should be based on the content provided. Make ypour test presentable.
             Content: {content}
             """
             
