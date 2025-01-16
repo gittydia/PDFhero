@@ -30,8 +30,23 @@ class PDFStorage:
     def __init__(self):
         self.current_text = ""
         self.chunks = []
-        
+
+class VectorStorage:
+    def __init__(self):
+        self.question_vectors = {}  # Initialize empty dict
+        self.transformer_model = SentenceTransformer('all-MiniLM-L6-v2')
+
+    def store_vector(self, question: str):
+        self.question_vectors[question] = self.transformer_model.encode([question])[0]
+        logger.debug(f"Stored vector for question: {question[:50]}...")
+
+    def get_vector(self, question: str):
+        if question not in self.question_vectors:
+            raise KeyError(f"No vector found for question: {question[:50]}...")
+        return self.question_vectors[question]
+
 pdf_storage = PDFStorage()
+vector_storage = VectorStorage()
 pdf_contents = {}
 transformer_model = SentenceTransformer('all-MiniLM-L6-v2')
 
@@ -120,7 +135,6 @@ async def generate_test(request: TestRequest):
         content = request.content 
         test_questions = await HeroTest.generate(content) # Assuming HeroTest.generate expects the content directly
 
-        # Split the response into individual questions
         questions = [q.strip() for q in test_questions.split('\n\n') if q.strip()]
         
         return {"questions": questions} 
@@ -138,14 +152,13 @@ async def get_content():
     return ContentResponse(content=pdf_storage.current_text)
 
 class AnswerRequest(BaseModel):
-    test_id: str = None
     user_answer: str
     original_question: str
 
 def generate_feedback(score: float) -> str:
-    if score > 0.85:
+    if score > 20.0:
         return "Excellent answer!"
-    elif score > 0.7:
+    elif score > 15.0:
         return "Good answer, but could be more precise."
     else:
         return "Your answer needs improvement."
@@ -153,24 +166,22 @@ def generate_feedback(score: float) -> str:
 @app.post("/check-answer")
 async def check_answer(request: AnswerRequest):
     try:
-        # Vectorize the user's answer
-        answer_vector = transformer_model.encode([request.user_answer])[0]
-        
-        # Compare with stored vectors using similarity
-        similarity_score = cosine_similarity(
-            [answer_vector], 
-            [request.original_vectors["output"]]
-        )[0][0]
-        
-        # Evaluate based on similarity threshold
-        is_correct = similarity_score > 0.85  # Adjust threshold as needed
-        
+        question_vector = vector_storage.get_vector(request.original_question)
+        if question_vector is None:
+            logger.error(f"Question not found: {request.original_question[:50]}...")
+            raise HTTPException(status_code=400, detail="Question not found in storage")
+
+        # Encode user answer
+        answer_vector = vector_storage.transformer_model.encode([request.user_answer])[0]
+        similarity_score = cosine_similarity([answer_vector], [question_vector])[0][0]
+
         return {
-            "is_correct": is_correct,
+            "is_correct": similarity_score > 0.7,
             "similarity_score": float(similarity_score),
-            "feedback": generate_feedback(similarity_score)
+            "feedback": generate_feedback(similarity_score * 20)
         }
     except Exception as e:
+        logger.error(f"Answer check error: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":

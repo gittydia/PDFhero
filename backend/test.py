@@ -38,7 +38,9 @@ class HeroTest:
             prompt = f"""
             Based on the following content, create five multiple choice questions with four options, create ten fill-in-the-blank questions, and ten
             true or false questions. the multiple choice contains a, b, c, and d. Each question should have only one correct answer. 
-            Make sure to make the questions challenging and engaging and the questions should be based on the content provided. Make ypour test presentable.
+            Make sure to make the questions challenging and engaging and the questions should be based on the content provided. Make your test presentable.
+            include the answer key in the last part of the test.
+            
             Content: {content}
             """
             
