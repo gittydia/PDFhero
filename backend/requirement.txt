@@ -12,3 +12,6 @@ python multi-part
 logging
 pydantic
 typing
+nltk
+textblob
+scrapy
