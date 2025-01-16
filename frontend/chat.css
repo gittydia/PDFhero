@@ -117,6 +117,7 @@ button:hover {
 
 .loading-message {
     color: rgb(37, 173, 236);
+    background-color: #007bff;
     font-style: italic;
     margin: 10px 0;
 }

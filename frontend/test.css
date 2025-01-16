@@ -1,0 +1,80 @@
+
+
+body {
+    font-family: monospace;
+    line-height: 1.6;
+    color: #ffffff;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+.container {
+    padding: 20px;
+    overflow-y: auto;
+    height: calc(100vh - 200px); /* Adjust based on your upload-container height */
+}
+.box {
+    margin-bottom: 20px;
+}
+
+textarea#userInput {
+    width: 80%;
+    min-height: 150px;
+    margin: 10px 0;
+}
+
+.upload-container {
+    padding: 20px;
+}
+
+h2{
+    font-weight: bold;
+
+}
+
+.correct {
+    background-color: #e7f7e7;
+    border: 1px solid #28a745;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.incorrect {
+    background-color: #fde7e7;
+    border: 1px solid #dc3545;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#aiTest{
+    background-color: white;
+    color: black;
+    margin-top: 20px;
+}
+
+#resultDisplay {
+    margin-top: 20px;
+}
+#uploadStatus {
+    margin-left: 10px;
+    display: inline-block;
+}
+
+
+button {
+    margin: 5px;
+    padding: 8px 16px;
+    position: relative;
+}
+
+positionTest{
+    top: -60px;
+    position: relative;
+    left: 350px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}

@@ -23,18 +23,11 @@
     <div class="container">
         <div class="box">
             <h2>AI Generated Question</h2>
-            <div id="aiAnswer" style="background-color: white; color: black;"></div>
+            <div id="aiAnswer" style="background-color: white; color: black; overflow-y: auto; max-height: 500px; max-width: 80%; left: 50px;" ></div>
         </div>
         
         <div class="test-controls">
             <button id="submitdBtn" class="action-button">Generate Test</button> 
-            <button id="checkAnswerBtn" class="action-button">Check Answer</button>
-        </div>
-
-        <div class="box">
-            <h2>Your Answer</h2> 
-            <textarea id="userInput" placeholder="Type your answer here..."></textarea>
-            <div id="resultDisplay"></div>
         </div>
     </div>
 </body>

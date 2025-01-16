@@ -183,31 +183,30 @@ document.addEventListener('DOMContentLoaded', () => {
         return div.innerHTML;
     }
 
+    const submitBtn = document.getElementById('SubmitdBtn');
+    const aiAnswer = document.getElementById('aiAnswer');
 
+    submitBtn.addEventListener('click', async () => {
+        try {
+            aiAnswer.textContent = 'Loading...';
+            const response = await fetch(`${API_URL}/test`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    filename: currentFile
+                })
+            });
 
-    function showError(message) {
-        const errorDiv = document.createElement('div');
-        errorDiv.classList.add('error-message');
-        errorDiv.textContent = message;
-        elements.chatBox?.appendChild(errorDiv);
-        setTimeout(() => errorDiv.remove(), 5000);
-    }
-
-    function showLoading(message) {
-        const loadingDiv = document.createElement('div');
-        loadingDiv.id = 'loading-indicator';
-        loadingDiv.classList.add('loading-message');
-        loadingDiv.textContent = message;
-        elements.chatBox?.appendChild(loadingDiv);
-    }
-
-    function hideLoading() {
-        document.getElementById('loading-indicator')?.remove();
-    }
-
-    function sanitizeHTML(str) {
-        const div = document.createElement('div');
-        div.textContent = str;
-        return div.innerHTML;
-    }
+            const data = await response.json();
+            if (data.questions && Array.isArray(data.questions)) {
+                aiAnswer.textContent = data.questions.join('\n');
+            } else {
+                throw new Error('Invalid response format');
+            }
+        } catch (error) {
+            aiAnswer.textContent = 'Error generating test: ' + error.message;
+        }
+    });
 });
