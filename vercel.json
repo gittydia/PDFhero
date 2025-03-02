@@ -6,8 +6,8 @@
             "use": "@vercel/python"
         },
         {
-            "src": "index.html",
-            "use": "@vercel/static"
+            "src": "",
+            "use": "index.html"
         }
     ],
     "routes": [
@@ -17,7 +17,7 @@
         },
         {
             "src": "/(.*)",
-            "dest": "/$1"
+            "dest": "/index.html"
         }
     ]
 }
